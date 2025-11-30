@@ -19,7 +19,24 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 class YouTubeShortsGenerator:
     def __init__(self):
         self.channel_id = "UCF1kVN_SXtMiPYsB3hP9mlQ"
-        self.service = build("youtube", "v3", credentials=Credentials.from_authorized_user_file("token.json"))
+        SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+        creds = None
+        if os.path.exists("token.json"):
+            creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                from google.auth.transport.requests import Request
+                creds.refresh(Request())
+            else:
+                from google_auth_oauthlib.flow import InstalledAppFlow
+                flow = InstalledAppFlow.from_client_secrets_file("client_secret.json", SCOPES)
+                creds = flow.run_local_server(port=0)
+            
+            with open("token.json", "w") as token:
+                token.write(creds.to_json())
+                
+        self.service = build("youtube", "v3", credentials=creds)
     
     def extract_highlights(self, video_path, num_clips=5):
         """Extract highlight moments from gaming video"""
