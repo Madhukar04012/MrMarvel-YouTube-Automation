@@ -1,0 +1,14 @@
+# YouTube Automation Dependencies
+google-auth-oauthlib==1.2.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.108.0
+google-generativeai==0.3.0
+ffmpeg-python==0.2.1
+requests==2.31.0
+python-dotenv==1.0.0
+Pillow==10.1.0
+firebase-admin==6.4.0
+aiohttp==3.9.1
+pandas==2.1.3
+APScheduler==3.10.4
+flask==3.0.0
