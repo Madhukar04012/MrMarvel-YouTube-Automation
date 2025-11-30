@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.mp4
+*.log
+token.json
+gaming_videos/
+shorts_output/
+music/
+logs/
